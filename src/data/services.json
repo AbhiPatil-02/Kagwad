@@ -1,0 +1,25 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "name": "Organic Farming Consultation",
+      "category": "Agriculture",
+      "image": "/images/services/agri1.jpg",
+      "description": "Expert advice on organic farming techniques and pest control for local farmers."
+    },
+    {
+      "id": 2,
+      "name": "Hand-Woven Baskets",
+      "category": "Handicrafts",
+      "image": "/images/services/handi1.jpg",
+      "description": "Artisanal, hand-woven baskets crafted from locally sourced materials."
+    },
+    {
+      "id": 3,
+      "name": "Plumbing Services",
+      "category": "Local Services",
+      "image": "/images/services/service1.jpg",
+      "description": "Reliable plumbing and repair services for homes and businesses in Kagwad."
+    }
+  ]
+}

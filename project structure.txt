@@ -1,0 +1,45 @@
+village-portal/
+├── public/
+│   ├── images/         # (No change)
+│   └── index.html
+├── src/
+│   ├── assets/
+│   │   └── logo.svg    # SVGs, logos, icons imported in components
+│   ├── components/
+│   │   ├── common/     # Reusable UI elements (buttons, inputs)
+│   │   │   ├── Button.jsx
+│   │   │   └── InputField.jsx
+│   │   ├── layout/     # Layout components
+│   │   │   ├── Navbar.jsx
+│   │   │   └── Footer.jsx
+│   │   ├── service/    # Components related to services
+│   │   │   ├── ServiceCard.jsx
+│   │   │   └── ServiceCategoryCard.jsx
+│   │   └── admin/
+│   │       └── PendingService.jsx # Card for an admin to review
+│   ├── context/
+│   │   ├── AuthContext.jsx       # Manages user & admin auth state
+│   │   └── DataContext.jsx       # Manages all services & categories
+│   ├── hooks/
+│   │   └── useLocalStorage.js    # Custom hook for persistence
+│   ├── i18n/
+│   │   ├── en.json               # English translations
+│   │   ├── kn.json               # Kannada translations
+│   │   └── i18n.js               # i18next configuration
+│   ├── pages/
+│   │   ├── Home.jsx              # Combined Home and About page
+│   │   ├── Services.jsx          # Page to browse all services
+│   │   ├── ServiceDetail.jsx     # View details of one service
+│   │   ├── AddService.jsx        # Form for users to add a service
+│   │   ├── Auth.jsx              # Single page for Login/Registration
+│   │   ├── AdminLogin.jsx        # Separate login page for admin
+│   │   └── AdminDashboard.jsx    # Admin panel to approve/reject
+│   ├── services/
+│   │   └── api.js                # All localStorage logic (our "fake API")
+│   ├── styles/
+│   │   ├── main.css              # Global styles, variables, Poppins font import
+│   │   └── components.css        # Common component styles
+│   ├── App.jsx
+│   └── main.jsx
+├── package.json
+└── vite.config.js
