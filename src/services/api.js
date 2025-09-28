@@ -1,5 +1,4 @@
 // src/services/api.js
-
 const usersKey = 'mock-users';
 const servicesKey = 'mock-services';
 const categoriesKey = 'mock-categories';
@@ -13,6 +12,10 @@ const initialUsers = [
     mobile: '9876543210',
     password: 'password123',
     role: 'admin',
+    email: 'admin@kagwad.com',
+    address: 'Kagwad Admin Office',
+    securityQuestion: "What is your favorite color?", // Note: This stores the EN question text
+    securityAnswer: 'blue'
   },
   {
     id: 'user1',
@@ -20,211 +23,12 @@ const initialUsers = [
     mobile: '9988776655',
     password: 'password123',
     role: 'user',
+    email: 'user1@example.com',
+    address: '123 Main St, Kagwad',
+    securityQuestion: "What was the name of your first pet?", // Note: This stores the EN question text
+    securityAnswer: 'max'
   },
 ];
-
-const initialServices = [
-  {
-    id: 'srv1',
-    name: 'Kagwad Govt Hospital',
-    category: 'health',
-    description: 'Provides general medical care and emergency services.',
-    address: 'Near Bus Stand',
-    phone: '9876543210',
-    images: ['/images/hospital.jpg'],
-    status: 'approved',
-    submittedById: 'user1',
-  },
-  {
-    id: 'srv2',
-    name: 'Pending Service',
-    category: 'home-services',
-    description: 'A service awaiting review.',
-    address: 'Town Square',
-    phone: '9123456789',
-    images: ['/images/pending.jpg'],
-    status: 'pending',
-    submittedById: 'user1',
-  },
-  {
-    id: 'srv3',
-    name: 'Shree Durga Medical Store',
-    category: 'health',
-    description: 'Pharmacy with 24/7 service and home delivery.',
-    address: 'Main Market Road',
-    phone: '9012345678',
-    images: ['/images/hospital.jpg'],
-    status: 'approved',
-    submittedById: 'user2',
-  },
-  {
-    id: 'srv4',
-    name: 'Government Primary School',
-    category: 'school-colleges',
-    description: 'State-run primary school with classes 1-7.',
-    address: 'School Road',
-    phone: '08253-234567',
-    images: ['/images/school.png'],
-    status: 'approved',
-    submittedById: 'user3',
-  },
-  {
-    id: 'srv5',
-    name: 'Sri Sai Electrical Works',
-    category: 'home-services',
-    description: 'Electrician services for wiring, fans, lights & appliances.',
-    address: 'Opposite Police Station',
-    phone: '9988776655',
-    images: ['/images/electrical.jpg'],
-    status: 'approved',
-    submittedById: 'user4',
-  },
-  {
-    id: 'srv6',
-    name: 'Cafe Delight',
-    category: 'cafe-restr',
-    description: 'Popular hangout spot for coffee, snacks, and desserts.',
-    address: 'Bus Stand Circle',
-    phone: '9876123450',
-    images: ['/images/cafe.png'],
-    status: 'approved',
-    submittedById: 'user5',
-  },
-  {
-    id: 'srv7',
-    name: 'Om Travels',
-    category: 'travel-transport',
-    description: 'Bus booking, cab service, and tour packages.',
-    address: 'Market Road',
-    phone: '8899001122',
-    images: ['/images/transport.png'],
-    status: 'pending',
-    submittedById: 'user6',
-  },
-  {
-    id: 'srv8',
-    name: 'Village Panchayat Office',
-    category: 'govt-offices',
-    description: 'Handles local governance and citizen services.',
-    address: 'Gram Panchayat Road',
-    phone: '08253-123456',
-    images: ['/images/govt.png'],
-    status: 'approved',
-    submittedById: 'user10',
-  },
-  {
-    id: 'srv9',
-    name: 'Sri Hanuman Temple',
-    category: 'temple',
-    description: 'Famous temple with daily pooja and annual festival.',
-    address: 'Temple Street',
-    phone: '9998887770',
-    images: ['/images/temple.png'],
-    status: 'approved',
-    submittedById: 'user11',
-  },
-  {
-    id: 'srv10',
-    name: 'City General Stores',
-    category: 'stores',
-    description: 'General store with groceries, stationery, and snacks.',
-    address: 'Market Square',
-    phone: '9765432109',
-    images: ['/images/store.png'],
-    status: 'approved',
-    submittedById: 'user12',
-  },
-  {
-    id: 'srv11',
-    name: 'Ravi Water Supply',
-    category: 'home-services',
-    description: 'Tank water supply available for homes and events.',
-    address: 'Near Temple',
-    phone: '9700123456',
-    images: ['/images/water-supply.jpg'],
-    status: 'approved',
-    submittedById: 'user8',
-  },
-  {
-    id: 'srv12',
-    name: 'Shree Basaveshwar Library',
-    category: 'school-colleges',
-    description: 'Public library with free book lending and reading hall.',
-    address: 'Library Road',
-    phone: '08253-456789',
-    images: ['/images/library.jpg'],
-    status: 'approved',
-    submittedById: 'user9',
-  },
-  {
-    id: 'srv13',
-    name: 'Youth Club Political Wing',
-    category: 'politics',
-    description: 'Organizes village development meetings and campaigns.',
-    address: 'Community Hall',
-    phone: '9898989898',
-    images: ['/images/politics.png'],
-    status: 'approved',
-    submittedById: 'user13',
-  },
-  {
-    id: 'srv14',
-    name: 'Salon & Beauty Care',
-    category: 'barber-parlor',
-    description: 'Haircuts, facials, and grooming services.',
-    address: 'Main Road',
-    phone: '8888777766',
-    images: ['/images/barber.png'],
-    status: 'approved',
-    submittedById: 'user14',
-  },
-  {
-    id: 'srv15',
-    name: 'Instagram Foodies Page',
-    category: 'instagram-pages',
-    description: 'Local Instagram page sharing food reviews and offers.',
-    address: 'Online Only',
-    phone: '',
-    images: ['/images/instagram.png'],
-    status: 'approved',
-    submittedById: 'user15',
-  },
-  {
-    id: 'srv16',
-    name: 'Sound & Light Decorators',
-    category: 'sound-decor',
-    description: 'DJ, lighting, and event decoration services.',
-    address: 'Event Road',
-    phone: '9090909090',
-    images: ['/images/sound.png'],
-    status: 'approved',
-    submittedById: 'user16',
-  },
-  {
-    id: 'srv17',
-    name: 'Star Studio',
-    category: 'photography',
-    description: 'Photography & videography for weddings and events.',
-    address: 'Market Lane',
-    phone: '9877001234',
-    images: ['/images/camera.png'],
-    status: 'approved',
-    submittedById: 'user17',
-  },
-  {
-    id: 'srv18',
-    name: 'Greenfield Agro Center',
-    category: 'agriculture',
-    description: 'Fertilizers, seeds, and farming equipment available.',
-    address: 'Agri Market Yard',
-    phone: '9753102468',
-    images: ['/images/agriculture.png'],
-    status: 'approved',
-    submittedById: 'user18',
-  },
-];
-
-
 
 const initialCategories = [
   { id: 'cat1', title: 'Home Services', slug: 'home-services', image: '/images/home.png' },
@@ -244,28 +48,111 @@ const initialCategories = [
   { id: 'cat15', title: 'Agriculture', slug: 'agriculture', image: '/images/agriculture.png' },
 ];
 
+const initialServices = [
+  {
+    id: 'srv1',
+    name: 'Kagwad Govt Hospital',
+    category: 'health',
+    description: 'Provides general medical care and emergency services.',
+    address: 'Near Bus Stand, Kagwad',
+    phone: '9876543210',
+    images: ['/images/hospital.jpg'],
+    status: 'approved',
+    submittedById: 'user1',
+    rating: 4.5,
+  },
+  {
+    id: 'srv2',
+    name: 'Pending Service Example',
+    category: 'home-services',
+    description: 'A service awaiting admin review and approval.',
+    address: 'Town Square, Kagwad',
+    phone: '9123456789',
+    images: ['/images/pending.jpg'],
+    status: 'pending',
+    submittedById: 'user1',
+  },
+  // ...add more services as needed...
+];
+
 const getFromLocalStorage = (key, initialValue) => {
-  // const data = localStorage.getItem(key);
-  // if (data) return JSON.parse(data);
+  const data = localStorage.getItem(key);
+  if (data) return JSON.parse(data);
   localStorage.setItem(key, JSON.stringify(initialValue));
   return initialValue;
 };
+
+
+// === Bilingual security questions data ===
+export const securityQuestions = [
+  {
+    en: "What is your mother's maiden name?",
+    kn: "ನಿಮ್ಮ ತಾಯಿಯ ಹುಡುಗಿಕೆಯ ಹೆಸರೇನು?"
+  },
+  {
+    en: "What was the name of your first pet?",
+    kn: "ನಿಮ್ಮ ಮೊದಲ ಸಾಕುಪ್ರಾಣಿಯ ಹೆಸರೇನು?"
+  },
+  {
+    en: "What is your favorite color?",
+    kn: "ನಿಮ್ಮ ನೆಚ್ಚಿನ ಬಣ್ಣ ಯಾವುದು?"
+  },
+  {
+    en: "What city were you born in?",
+    kn: "ನೀವು ಜನಿಸಿದ ನಗರ ಯಾವುದು?"
+  },
+  {
+    en: "What is your favorite book?",
+    kn: "ನಿಮ್ಮ ನೆಚ್ಚಿನ ಪುಸ್ತಕ ಯಾವುದು?"
+  },
+  {
+    en: "What was your childhood nickname?",
+    kn: "ನಿಮ್ಮ ಬಾಲ್ಯದ ಅಡ್ಡಹೆಸರೇನು?"
+  },
+  {
+    en: "What is the name of your elementary school?",
+    kn: "ನಿಮ್ಮ ಪ್ರಾಥಮಿಕ ಶಾಲೆಯ ಹೆಸರೇನು?"
+  },
+  {
+    en: "What is your favorite food?",
+    kn: "ನಿಮ್ಮ ನೆಚ್ಚಿನ ಆಹಾರ ಯಾವುದು?"
+  },
+  {
+    en: "What is your father's middle name?",
+    kn: "ನಿಮ್ಮ ತಂದೆಯ ಮಧ್ಯದ ಹೆಸರೇನು?"
+  },
+  {
+    en: "What is your dream job?",
+    kn: "ನಿಮ್ಮ ಕನಸಿನ ಉದ್ಯೋಗ ಯಾವುದು?"
+  }
+];
+
+// Helper function to get security questions in current language
+export const getSecurityQuestions = (language = 'en') => {
+  // Map over the bilingual array and return the question text for the requested language.
+  // Fallback to 'en' if the requested language key doesn't exist for a question.
+  return securityQuestions.map(q => q[language] || q.en);
+};
+
 
 // --- AUTH API ---
 export const loginUser = async ({ mobile, password }) => {
   const users = getFromLocalStorage(usersKey, initialUsers);
   const user = users.find(u => u.mobile === mobile && u.password === password);
   if (user) {
-    return { success: true, user: { ...user, token: 'mock-token' } };
+    // Destructure to remove password and securityAnswer for security, and securityQuestion (as it's not needed in context)
+    const { password, securityAnswer, securityQuestion, ...userWithoutSecrets } = user;
+    return { success: true, user: { ...userWithoutSecrets, token: 'mock-token' } };
   }
   return { success: false, message: 'Invalid credentials.' };
 };
 
-export const adminLogin = async ({ email, password }) => {
+export const adminLogin = async ({ mobile, password }) => {
   const users = getFromLocalStorage(usersKey, initialUsers);
-  const user = users.find(u => u.email === email && u.password === password && u.role === 'admin');
+  const user = users.find(u => u.mobile === mobile && u.password === password && u.role === 'admin');
   if (user) {
-    return { success: true, user: { ...user, token: 'mock-admin-token' } };
+    const { password, securityAnswer, securityQuestion, ...userWithoutSecrets } = user;
+    return { success: true, user: { ...userWithoutSecrets, token: 'mock-admin-token' } };
   }
   return { success: false, message: 'Invalid admin credentials.' };
 };
@@ -275,10 +162,78 @@ export const registerUser = async (userData) => {
   if (users.some(u => u.mobile === userData.mobile)) {
     return { success: false, message: 'User with this mobile number already exists.' };
   }
-  const newUser = { id: Date.now().toString(), ...userData, role: 'user' };
+  const newUser = { 
+    id: Date.now().toString(), 
+    ...userData, 
+    role: 'user',
+    email: userData.email || '',
+    address: userData.address || '',
+  };
   users.push(newUser);
   localStorage.setItem(usersKey, JSON.stringify(users));
-  return { success: true, user: { ...newUser, token: 'mock-token' } };
+  const { password, securityAnswer, securityQuestion, ...userWithoutSecrets } = newUser;
+  return { success: true, user: { ...userWithoutSecrets, token: 'mock-token' } };
+};
+
+export const updateUserProfile = async (userId, userData) => {
+  const users = getFromLocalStorage(usersKey, initialUsers);
+  const updatedUsers = users.map(u => 
+    u.id === userId ? { ...u, ...userData } : u
+  );
+  localStorage.setItem(usersKey, JSON.stringify(updatedUsers));
+  const updatedUser = updatedUsers.find(u => u.id === userId);
+  return { success: true, user: updatedUser };
+};
+
+// --- Password Reset API ---
+export const getUserSecurityQuestion = async (mobile) => {
+  const users = getFromLocalStorage(usersKey, initialUsers);
+  const user = users.find(u => u.mobile === mobile);
+
+  if (!user) {
+    return { success: false, message: 'User not found with this mobile number.' };
+  }
+
+  return { 
+    success: true, 
+    // The security question is returned as the stored English string. The frontend handles translation.
+    securityQuestion: user.securityQuestion 
+  };
+};
+
+export const verifySecurityAnswer = async (mobile, securityAnswer) => {
+  const users = getFromLocalStorage(usersKey, initialUsers);
+  const user = users.find(u => u.mobile === mobile);
+
+  if (!user) {
+    return { success: false, message: 'User not found with this mobile number.' };
+  }
+
+  if (user.securityAnswer.toLowerCase().trim() === securityAnswer.toLowerCase().trim()) {
+    // Return the essential info needed for the next step (resetPassword)
+    return { 
+      success: true, 
+      user: { 
+        mobile: user.mobile, 
+        securityQuestion: user.securityQuestion // Stored English version
+      } 
+    };
+  } else {
+    return { success: false, message: 'Incorrect security answer.' };
+  }
+};
+
+export const resetPassword = async (mobile, newPassword) => {
+  const users = getFromLocalStorage(usersKey, initialUsers);
+  const userIndex = users.findIndex(u => u.mobile === mobile);
+
+  if (userIndex === -1) {
+    return { success: false, message: 'User not found.' };
+  }
+
+  users[userIndex].password = newPassword;
+  localStorage.setItem(usersKey, JSON.stringify(users));
+  return { success: true, message: 'Password reset successfully.' };
 };
 
 // --- DATA API ---
@@ -290,12 +245,23 @@ export const getAllCategories = async () => {
   return getFromLocalStorage(categoriesKey, initialCategories);
 };
 
+export const getServicesByCategory = async (categorySlug) => {
+  const services = await getAllServices();
+  return services.filter(s => s.category === categorySlug && s.status === 'approved');
+};
+
+export const getServiceById = async (serviceId) => {
+  const services = await getAllServices();
+  return services.find(s => s.id === serviceId);
+};
+
 export const submitService = async (serviceData) => {
   const services = getFromLocalStorage(servicesKey, initialServices);
   const newService = {
     ...serviceData,
     id: Date.now().toString(),
     status: 'pending',
+    images: serviceData.images || ['/images/service_placeholder.jpg'],
   };
   services.push(newService);
   localStorage.setItem(servicesKey, JSON.stringify(services));
@@ -313,7 +279,11 @@ export const updateServiceStatus = async (serviceId, status, comment) => {
 
 export const submitContactForm = async (formData) => {
   const contactForms = getFromLocalStorage(contactFormsKey, []);
-  const newSubmission = { id: Date.now().toString(), ...formData, timestamp: new Date().toISOString() };
+  const newSubmission = { 
+    id: Date.now().toString(), 
+    ...formData, 
+    timestamp: new Date().toISOString() 
+  };
   contactForms.push(newSubmission);
   localStorage.setItem(contactFormsKey, JSON.stringify(contactForms));
   return { success: true, submission: newSubmission };

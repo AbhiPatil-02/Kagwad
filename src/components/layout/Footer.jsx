@@ -1,8 +1,12 @@
+// src/components/layout/Footer.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import '../../styles/components.css';
 
 export default function Footer() {
+  const { isAuthenticated } = useAuth();
+
   return (
     <footer className="footer animate-fade-in-up">
       <div className="footer-content">
@@ -11,7 +15,8 @@ export default function Footer() {
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
           <Link to="/services">Services</Link>
-          <Link to="/contact">Contact</Link>
+          {/* Only show Contact link if logged in */}
+          {isAuthenticated && <Link to="/contact">Contact</Link>}
         </div>
         <div className="social-icons">
           <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover-zoom">FB</a>

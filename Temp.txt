@@ -1,0 +1,122 @@
+✅ Summary of Roles and Functionalities
+| Role  | Can Access                             | Actions                                                       |
+| ----- | -------------------------------------- | ------------------------------------------------------------- |
+| Admin | Dashboard, Users, Services, Categories | Create, Read, Update, Delete, Map redirect                    |
+| User  | Services Page                          | List services, Filter by category, View details, Map redirect |
+| Both  | Logo/Header                            | Navigate to home                                              |
+
+
+
+1️⃣ Admin Functionality
+
+Admins have full access. Their page/components should allow:
+
+Admin Dashboard (/admin)
+
+View all users and services
+
+List all users with details (name, email, role).
+
+List all services with details (name, category, description, location).
+
+CRUD operations on users and services
+
+Create: Add new user/service.
+
+Read: View details of user/service.
+
+Update: Modify user info or service details.
+
+Delete: Remove users/services.
+
+Category management
+
+Add, update, delete service categories.
+
+Location handling for services
+
+Each service has a location (lat/lng or address).
+
+Click “View on Map” → redirects to Google Maps at that location.
+
+Auth
+
+Admin login required to access dashboard (adminLogin).
+
+Logout functionality.
+
+Files to modify/add
+
+AdminLogin.jsx → already handles login.
+
+AdminDashboard.jsx → needs CRUD + map redirect buttons.
+
+api.js → implement CRUD functions for users/services/categories.
+
+mockData.js → add all required data arrays (users, services, categories).
+
+components/common/Modal.jsx → optional, for create/update forms.
+
+2️⃣ User Functionality
+
+Users have read-only access with interactive features:
+
+User Dashboard / Services Page
+
+View services by category
+
+Fetch categories from mockCategories.
+
+Click category → show services in that category.
+
+View service details
+
+Show name, description, category, and location.
+
+Redirect to Google Maps
+
+“View on Map” button → opens Google Maps at service location.
+
+Optional features:
+
+Search/filter services by name or category.
+
+Favorite/bookmark services (if needed).
+
+Files to modify/add
+
+ServicesPage.jsx → list services filtered by category.
+
+ServiceCard.jsx → show service info + map redirect.
+
+api.js → read-only fetch functions for services/categories.
+
+3️⃣ Shared Components
+
+Logo.jsx → present on all pages.
+
+InputField.jsx & Button.jsx → for forms (login, CRUD).
+
+Modal / Form Components → admin create/update operations.
+
+4️⃣ Navigation & Routing
+
+Routes for admin
+
+/admin/login → login page.
+
+/admin/dashboard → full CRUD + maps.
+
+Routes for users
+
+/ → home page with categories.
+
+/services/:categoryId → list of services.
+
+/services/:serviceId → service details + map redirect.
+
+Route guards
+
+Admin pages must check isAdminLoggedIn.
+
+User pages accessible to all.

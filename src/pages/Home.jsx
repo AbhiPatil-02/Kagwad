@@ -3,6 +3,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useData } from '../context/DataContext';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../context/AuthContext'; // ✅ Import useAuth
 import Button from '../components/common/Button';
 import ServiceCard from '../components/common/ServiceCard';
 import '../styles/components.css';
@@ -14,11 +15,21 @@ export default function Home() {
   const { categories, services, loading } = useData();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth(); // ✅ Get isAuthenticated status
 
   const totalServices = services.filter(s => s.status === 'approved').length;
   const featuredServices = getFeaturedServices(services);
 
   if (loading) return <div className="loading-message">{t('common.loading')}</div>;
+
+  // Function to handle redirection based on auth status
+  const handleContributeClick = () => {
+    if (isAuthenticated) {
+      navigate('/add-service');
+    } else {
+      navigate('/auth');
+    }
+  };
 
   return (
     <div className="page-wrapper home-page">
@@ -31,7 +42,8 @@ export default function Home() {
             <Button onClick={() => navigate('/services')}>
               {t('homePage.exploreServices', 'Explore Services')}
             </Button>
-            <Button onClick={() => navigate('/add-service')} variant="secondary">
+            {/* ✅ Updated: Use handleContributeClick for the "Add Service" button */}
+            <Button onClick={handleContributeClick} variant="secondary">
               {t('homePage.addService', 'Add Service')}
             </Button>
           </div>
@@ -94,18 +106,20 @@ export default function Home() {
       <div className="section call-to-action">
         <h3>{t('homePage.ctaTitle', 'Contribute Now')}</h3>
         <p>{t('homePage.ctaDescription', 'Add your service and help the community grow.')}</p>
-        <Link to="/add-service">
-          <Button>{t('homePage.contributeNow', 'Contribute Now')}</Button>
-        </Link>
+        {/* ✅ Updated: Use handleContributeClick and render a button instead of a Link wrapper */}
+        <Button onClick={handleContributeClick}>
+          {t('homePage.contributeNow', 'Contribute Now')}
+        </Button>
       </div>
 
       {/* Contact teaser */}
       <div className="section contact-section">
         <h2>{t('contactPage.title', 'Contact Us')}</h2>
         <p>{t('contactPage.teaserText', 'Get in touch for support or queries.')}</p>
-        <Link to="/contact">
-          <Button>{t('contactPage.contactUs', 'Contact')}</Button>
-        </Link>
+        {/* Contact is protected, so this link must also check auth status for redirect */}
+        <Button onClick={() => navigate(isAuthenticated ? '/contact' : '/auth')}>
+          {t('contactPage.contactUs', 'Contact')}
+        </Button>
       </div>
     </div>
   );

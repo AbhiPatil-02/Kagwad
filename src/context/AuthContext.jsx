@@ -1,6 +1,6 @@
 // src/context/AuthContext.jsx
 import React, { createContext, useContext, useState } from 'react';
-import { loginUser, registerUser } from '../services/api';  // ✅ use your mock API
+import { loginUser, registerUser, updateUserProfile } from '../services/api';
 
 const AuthContext = createContext();
 
@@ -40,12 +40,36 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const updateProfile = async (userId, userData) => {
+    setLoading(true);
+    try {
+      const result = await updateUserProfile(userId, userData);
+      if (result.success) {
+        setUser(result.user);
+        return { success: true };
+      } else {
+        return { success: false, message: 'Failed to update profile' };
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const isAuthenticated = !!user;
   const isAdmin = user?.role === 'admin';
 
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, register, loading, isAuthenticated, isAdmin }}
+      value={{ 
+        user, 
+        login, 
+        logout, 
+        register, 
+        updateProfile,
+        loading, 
+        isAuthenticated, 
+        isAdmin 
+      }}
     >
       {children}
     </AuthContext.Provider>

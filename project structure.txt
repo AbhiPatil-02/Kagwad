@@ -78,5 +78,4 @@ village-portal/
 │   └── main.jsx
 │
 ├── index.html
-├── package.json
-└── vite.config.js
+└── package.json

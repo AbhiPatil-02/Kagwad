@@ -1,31 +1,39 @@
 // src/pages/ContactUs.jsx
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
+import { submitContactForm } from "../services/api";
+import InputField from "../components/common/InputField";
+import Button from "../components/common/Button";
 import "../styles/components.css";
 
-export default function ContactPage() {
+export default function ContactUs() {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/auth");
-    }
-  }, [user, navigate]);
-
   const [formData, setFormData] = useState({
-    reason: "",
     name: user?.name || "",
-    mobile: user?.mobile || "",
     email: user?.email || "",
+    mobile: user?.mobile || "",
+    inquiryType: "",
     subject: "",
     message: "",
   });
 
   const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // Pre-fill user data when component mounts or user changes
+  useEffect(() => {
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        name: user.name || "",
+        email: user.email || "",
+        mobile: user.mobile || "",
+      }));
+    }
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,141 +42,119 @@ export default function ContactPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setStatus(t("contactPage.sending"));
 
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.token}`,
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (res.ok) {
+      const result = await submitContactForm(formData);
+      if (result.success) {
         setStatus(t("contactPage.thanksMessage"));
         setFormData({
-          reason: "",
           name: user?.name || "",
-          mobile: user?.mobile || "",
           email: user?.email || "",
+          mobile: user?.mobile || "",
+          inquiryType: "",
           subject: "",
           message: "",
         });
       } else {
-        setStatus("❌ " + t("contactPage.errorMessage"));
+        setStatus(t("contactPage.errorMessage"));
       }
     } catch (err) {
-      setStatus("⚠️ " + t("contactPage.errorMessage"));
+      setStatus(t("contactPage.errorMessage"));
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="page-container">
-      <div className="form-card">
-        <h2 className="form-title">{t("contactPage.title")}</h2>
-        <p className="form-subtitle">{t("contactPage.description")}</p>
+    <div className="page-wrapper">
+      <div className="page-header">
+        <h1>{t("contactPage.title")}</h1>
+        <p>{t("contactPage.description")}</p>
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Reason */}
-          <div>
-            <label className="form-label">{t("contactPage.inquiryType")}</label>
+      <div className="contact-form-container">
+        <form onSubmit={handleSubmit} className="contact-form">
+          <InputField
+            label={t("contactPage.yourName")}
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder={t("contactPage.namePlaceholder")}
+            required
+          />
+
+          <InputField
+            label={t("contactPage.yourEmail")}
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder={t("contactPage.emailPlaceholder")}
+            required
+          />
+
+          <InputField
+            label={t("contactPage.yourMobile")}
+            type="tel"
+            name="mobile"
+            value={formData.mobile}
+            onChange={handleChange}
+            placeholder={t("contactPage.mobilePlaceholder")}
+            required
+          />
+
+          <div className="form-group">
+            <label>{t("contactPage.inquiryType")}</label>
             <select
-              name="reason"
-              value={formData.reason}
+              name="inquiryType"
+              value={formData.inquiryType}
               onChange={handleChange}
-              required
               className="input-field"
+              required
             >
               <option value="">{t("contactPage.selectOption")}</option>
               <option value="suggestion">{t("contactPage.suggestion")}</option>
               <option value="complaint">{t("contactPage.complaint")}</option>
               <option value="question">{t("contactPage.question")}</option>
-              <option value="generalFeedback">
-                {t("contactPage.generalFeedback")}
-              </option>
+              <option value="feedback">{t("contactPage.generalFeedback")}</option>
               <option value="other">{t("contactPage.other")}</option>
             </select>
           </div>
 
-          {/* Name */}
-          <div>
-            <label className="form-label">{t("contactPage.yourName")}</label>
-            <input
-              type="text"
-              name="name"
-              placeholder={t("contactPage.namePlaceholder")}
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="input-field"
-            />
-          </div>
+          <InputField
+            label={t("contactPage.subject")}
+            name="subject"
+            value={formData.subject}
+            onChange={handleChange}
+            placeholder={t("contactPage.subjectPlaceholder")}
+            required
+          />
 
-          {/* Mobile */}
-          <div>
-            <label className="form-label">{t("contactPage.yourMobile")}</label>
-            <input
-              type="tel"
-              name="mobile"
-              placeholder={t("contactPage.mobilePlaceholder")}
-              value={formData.mobile}
-              onChange={handleChange}
-              required
-              className="input-field"
-            />
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="form-label">{t("contactPage.yourEmail")}</label>
-            <input
-              type="email"
-              name="email"
-              placeholder={t("contactPage.emailPlaceholder")}
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="input-field"
-            />
-          </div>
-
-          {/* Subject */}
-          <div>
-            <label className="form-label">{t("contactPage.subject")}</label>
-            <input
-              type="text"
-              name="subject"
-              placeholder={t("contactPage.subjectPlaceholder")}
-              value={formData.subject}
-              onChange={handleChange}
-              required
-              className="input-field"
-            />
-          </div>
-
-          {/* Message */}
-          <div>
-            <label className="form-label">{t("contactPage.yourMessage")}</label>
+          <div className="form-group">
+            <label>{t("contactPage.yourMessage")}</label>
             <textarea
               name="message"
-              placeholder={t("contactPage.messagePlaceholder")}
               value={formData.message}
               onChange={handleChange}
-              rows="4"
-              required
+              placeholder={t("contactPage.messagePlaceholder")}
               className="input-field"
+              rows="5"
+              required
             />
           </div>
 
-          {/* Submit */}
-          <button type="submit" className="btn-primary w-full">
-            {t("contactPage.send")}
-          </button>
-        </form>
+          <Button type="submit" disabled={loading}>
+            {loading ? t("contactPage.sending") : t("contactPage.send")}
+          </Button>
 
-        {status && <p className="mt-4 text-center">{status}</p>}
+          {status && (
+            <div className={`status-message ${status.includes('✅') ? 'success' : 'error'}`}>
+              {status}
+            </div>
+          )}
+        </form>
       </div>
     </div>
   );

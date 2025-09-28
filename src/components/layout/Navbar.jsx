@@ -53,20 +53,28 @@ export default function Navbar() {
               {t("common.about")}
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/contact" className={({ isActive }) => (isActive ? "active-link" : "")}>
-              {t("common.contact")}
-            </NavLink>
-          </li>
+
+          {/* 🔒 Contact link - only show when authenticated */}
+          {isAuthenticated && (
+            <li>
+              <NavLink to="/contact" className={({ isActive }) => (isActive ? "active-link" : "")}>
+                {t("common.contact")}
+              </NavLink>
+            </li>
+          )}
 
           {isAuthenticated && (
             <>
               <li>
-                <NavLink to="/profile">{t("common.profile")}</NavLink>
+                <NavLink to="/profile" className={({ isActive }) => (isActive ? "active-link" : "")}>
+                  {t("common.profile")}
+                </NavLink>
               </li>
               {user?.role === "admin" && (
                 <li>
-                  <NavLink to="/admin">{t("common.admin")}</NavLink>
+                  <NavLink to="/admin" className={({ isActive }) => (isActive ? "active-link" : "")}>
+                    {t("common.admin")}
+                  </NavLink>
                 </li>
               )}
               <li>
