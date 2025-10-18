@@ -222,5 +222,18 @@
     "submitting": "Submitting...",
     "successMessage": "Service submitted successfully! It will be visible after admin approval.",
     "errorMessage": "Failed to submit service. Please try again."
+  },
+  "search": {
+    "placeholder": "Search services...",
+    "servicesPlaceholder": "Search services by name, category, description...",
+    "filterByCategory": "Filter by Category:",
+    "allCategories": "All Categories",
+    "clearFilters": "Clear Filters",
+    "noResults": "No services found matching your search.",
+    "resultsCount": "Found {{count}} services",
+    "searchingFor": "Searching for:",
+    "searchResults": "Search Results",
+    "noServicesFound": "No services found. Try adjusting your search or filters.",
+    "showAllServices": "Show All Services"
   }
 }
